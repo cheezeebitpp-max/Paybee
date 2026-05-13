@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  FROZEN
+  SUSPENDED
+  BANNED
+}
+
+model User {
+  id            String     @id @default(uuid())
+  email         String     @unique
+  password      String
+  fullName      String?    @map("full_name")
+  role          Role       @default(USER)
+  status        UserStatus @default(ACTIVE)
+  walletBalance Float      @default(0) @map("wallet_balance")
+  kycStatus     String     @default("pending") @map("kyc_status")
+  createdById   String?    @map("created_by_id")
+  
+  createdBy     User?      @relation("AdminCreatedUsers", fields: [createdById], references: [id])
+  createdUsers  User[]     @relation("AdminCreatedUsers")
+  
+  deposits      Deposit[]
+  payouts       Payout[]
+  trades        Trade[]
+  
+  createdAt     DateTime   @default(now()) @map("created_at")
+
+  @@map("profiles")
+}
+
+model Deposit {
+  id        String   @id @default(uuid())
+  amount    Float
+  network   String
+  txid      String
+  proofUrl  String?  @map("proof_url")
+  status    String   @default("pending")
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("deposits")
+}
+
+model Payout {
+  id            String   @id @default(uuid())
+  amount        Float
+  bankName      String   @map("bank_name")
+  accountNumber String   @map("account_number")
+  ifsc          String
+  status        String   @default("pending")
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("payouts")
+}
+
+model Trade {
+  id        String   @id @default(uuid())
+  amount    Float
+  status    String   @default("pending")
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("trades")
+}

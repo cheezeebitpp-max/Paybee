@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayBee Admin | Secure Login</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="cyber-hex cyber-grid min-h-screen flex items-center justify-center p-4">
+    
+    <div class="glass w-full max-w-md p-8 rounded-2xl border-paybee-green/30 animate-fade-in">
+        <div class="text-center mb-10">
+            <div class="flex justify-center mb-4">
+                <img src="/paybee_logo.png" alt="PayBee Logo" class="w-32 h-32 object-contain filter drop-shadow-[0_0_10px_rgba(34,197,94,0.5)]">
+            </div>
+            <h1 class="text-3xl font-display text-white tracking-widest mb-2 font-bold italic">PAYBEE <span class="text-paybee-green">ADMIN</span></h1>
+            <p class="text-slate-500 text-xs uppercase tracking-[0.3em]">Authorized Personnel Only</p>
+        </div>
+
+        <form id="login-form">
+            <div class="mb-6">
+                <label class="block text-xs uppercase tracking-widest text-paybee-green mb-2 font-bold" for="email">Admin Terminal ID (Email)</label>
+                <input type="email" id="email" required
+                    class="w-full bg-paybee-black border border-paybee-green/30 rounded-lg p-3 text-white focus:outline-none focus:border-paybee-green transition-all"
+                    placeholder="admin@paybee.com">
+            </div>
+
+            <div class="mb-8">
+                <label class="block text-xs uppercase tracking-widest text-paybee-green mb-2 font-bold" for="password">Security Protocol (Password)</label>
+                <input type="password" id="password" required
+                    class="w-full bg-paybee-black border border-paybee-green/30 rounded-lg p-3 text-white focus:outline-none focus:border-paybee-green transition-all"
+                    placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="w-full btn-primary py-4 text-sm font-bold tracking-widest shadow-paybee-yellow/20">
+                LOGIN TO TERMINAL
+            </button>
+        </form>
+
+        <div class="mt-8 text-center">
+            <p class="text-[10px] text-slate-600 uppercase tracking-widest leading-loose">
+                Secure connection established via Port 443<br>
+                Encryption: AES-256 GCM<br>
+                © 2026 PAYBEE CORE SYSTEMS
+            </p>
+        </div>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+</body>
+</html>

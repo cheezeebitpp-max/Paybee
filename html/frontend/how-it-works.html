@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayBee | How It Works</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'hive-green': '#2E7D32',
+                        'neon-green': '#7CB342',
+                        'honey-gold': '#FFC107',
+                        'deep-forest': '#0F1014', /* Sleek Grey-Black */
+                        'snow-white': '#FAFAFA',
+                        'charcoal': '#1A1A1A',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'display': ['Space Grotesk', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+
+        .hexagon {
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 3D Tilt utility */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            transition: transform 0.1s ease-out;
+        }
+
+        .tilt-content {
+            transform: translateZ(20px);
+        }
+
+        /* Vertical Timeline CSS */
+        .timeline-container {
+            position: relative;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 28px;
+            /* Center of the 56px wide hexagon */
+            width: 2px;
+            background: linear-gradient(to bottom, #7CB342, #FFC107);
+            z-index: 0;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-container::before {
+                left: 20px;
+                /* Adjusted for mobile smaller icons */
+            }
+        }
+
+        /* AI Chat Markdown Styling */
+        .prose p {
+            margin-bottom: 0.5rem;
+        }
+
+        .prose strong {
+            color: #FFC107;
+        }
+    </style>
+</head>
+
+<body class="bg-snow-white text-charcoal font-sans antialiased selection:bg-neon-green selection:text-deep-forest">
+
+    <!-- Header (Dark) -->
+    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-4 transition-all duration-300 bg-deep-forest/90 backdrop-blur-lg border-b border-white/10"
+        id="navbar">
+        <div class="max-w-7xl mx-auto flex justify-between items-center rounded-full px-6 py-3">
+            <a href="index.html" class="flex items-center gap-3 cursor-pointer">
+                <img src="assets/images/logo.png" alt="PayBee Logo"
+                    class="h-12 w-auto object-contain origin-left scale-125">
+            </a>
+            <div class="hidden md:flex gap-8 items-center font-medium text-sm text-snow-white">
+                <a href="how-it-works.html" class="text-neon-green transition-colors">How It Works</a>
+                <a href="features.html" class="hover:text-neon-green transition-colors">Features</a>
+                <a href="security.html" class="hover:text-neon-green transition-colors">Security</a>
+                <a href="fees.html" class="hover:text-neon-green transition-colors">Fees</a>
+            </div>
+            <div class="flex gap-4 items-center">
+                <a href="login.html"
+                    class="hidden md:block text-sm text-snow-white hover:text-neon-green transition-colors font-medium">Log
+                    In</a>
+                <a href="register.html"
+                    class="px-5 py-2 text-sm font-bold bg-honey-gold text-deep-forest rounded-full hover:scale-105 transition-transform shadow-[0_0_15px_rgba(255,193,7,0.3)]">Sign
+                    Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Hero Section -->
+    <section class="relative pt-40 pb-32 bg-deep-forest text-snow-white overflow-hidden">
+        <!-- Background Gradients -->
+        <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full bg-gradient-to-b from-hive-green/20 to-transparent opacity-50 z-0">
+        </div>
+        <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-snow-white to-transparent z-10"></div>
+
+        <div class="max-w-4xl mx-auto px-6 relative z-20 text-center">
+            <div
+                class="inline-block px-4 py-1.5 rounded-full border border-white/20 bg-white/5 text-gray-300 text-xs font-bold tracking-wide mb-6">
+                STEP-BY-STEP GUIDE
+            </div>
+            <h1
+                class="hero-el font-display text-5xl md:text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
+                How PayBee Works
+            </h1>
+            <p class="hero-el text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                Whether you're buying or selling USDT, the process is clear, protected, and simple to follow.
+            </p>
+        </div>
+    </section>
+
+    <!-- 2. Sticky Dual-Tab Navigation -->
+    <div class="sticky top-20 z-40 bg-snow-white/90 backdrop-blur-md border-b border-gray-200 py-4 shadow-sm"
+        id="sticky-tabs">
+        <div class="max-w-3xl mx-auto px-6 flex justify-center">
+            <div class="bg-gray-100 p-1.5 rounded-full flex gap-2 relative w-full sm:w-auto">
+                <div id="tab-indicator"
+                    class="absolute top-1.5 left-1.5 w-[calc(50%-6px)] h-[calc(100%-12px)] bg-white rounded-full shadow-md transition-transform duration-300 ease-out z-0">
+                </div>
+
+                <button onclick="switchTimeline('buy')" id="btn-tab-buy"
+                    class="relative z-10 flex-1 sm:w-48 py-2.5 rounded-full text-sm font-bold text-hive-green transition-colors text-center">Buying
+                    USDT</button>
+                <button onclick="switchTimeline('sell')" id="btn-tab-sell"
+                    class="relative z-10 flex-1 sm:w-48 py-2.5 rounded-full text-sm font-bold text-gray-500 transition-colors text-center">Selling
+                    USDT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Timeline Content Area -->
+    <section class="py-16 max-w-3xl mx-auto px-6 relative">
+
+        <!-- BUYING TIMELINE -->
+        <div id="timeline-buy" class="timeline-container w-full transition-opacity duration-500 opacity-100 block z-10">
+            <div class="space-y-12 pb-12">
+
+                <!-- Step 1 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-hive-green flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(46,125,50,0.4)] mt-1">
+                        <span class="text-white font-bold text-lg">1</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Submit Your Registration</h3>
+                            <p class="text-gray-600 leading-relaxed">Fill in your details and upload your identity
+                                documents. Our admin team reviews and activates your account manually. You'll receive
+                                your login credentials once approved.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-hive-green flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(46,125,50,0.4)] mt-1">
+                        <span class="text-white font-bold text-lg">2</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Deposit USDT to Your Wallet</h3>
+                            <p class="text-gray-600 leading-relaxed">Send USDT to your assigned PayBee wallet address on
+                                TRC20, ERC20, or BEP20.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-hive-green flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(46,125,50,0.4)] mt-1">
+                        <span class="text-white font-bold text-lg">3</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Submit Your Transaction ID</h3>
+                            <p class="text-gray-600 leading-relaxed">Once sent, paste your blockchain transaction ID
+                                (TXID) into the platform dashboard.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-hive-green flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(46,125,50,0.4)] mt-1">
+                        <span class="text-white font-bold text-lg">4</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Admin Verifies On-Chain</h3>
+                            <p class="text-gray-600 leading-relaxed">Our admin team queries the blockchain explorer
+                                directly, confirms the amount, network, and confirmation count against your TXID.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-neon-green flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(124,179,66,0.4)] mt-1">
+                        <span class="text-white font-bold text-lg">5</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full border-l-4 border-l-neon-green">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Balance Credited to Your Account</h3>
+                            <p class="text-gray-600 leading-relaxed">Once verification is complete, your USDT balance is
+                                credited to your PayBee wallet. You'll receive a notification when this happens and can
+                                see it reflected in your dashboard immediately.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 6 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-hive-green flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(46,125,50,0.4)] mt-1">
+                        <span class="text-white font-bold text-lg">6</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Browse Available Sell Offers</h3>
+                            <p class="text-gray-600 leading-relaxed">View active sell offers on the P2P marketplace.
+                                Filter by rate, amount range, and accepted banks. Pick the one that suits you.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 7 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-honey-gold flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(255,193,7,0.4)] mt-1">
+                        <span class="text-deep-forest font-bold text-lg">7</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full border-l-4 border-l-honey-gold">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Initiate a Trade</h3>
+                            <p class="text-gray-600 leading-relaxed">Click Trade on a sell offer. The platform
+                                immediately locks the seller's USDT in escrow. The seller's bank details are revealed to
+                                you — and only you — once escrow is confirmed.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 8 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-hive-green flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(46,125,50,0.4)] mt-1">
+                        <span class="text-white font-bold text-lg">8</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Send the Bank Transfer</h3>
+                            <p class="text-gray-600 leading-relaxed">Transfer the fiat amount to the seller's bank
+                                account using your online banking.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 9 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-hive-green flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(46,125,50,0.4)] mt-1">
+                        <span class="text-white font-bold text-lg">9</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Upload Your Payment Proof</h3>
+                            <p class="text-gray-600 leading-relaxed">Screenshot your completed bank transfer and upload
+                                it to the trade page. The system hashes and timestamps your file the moment it is
+                                received.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 10 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-hive-green flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(46,125,50,0.4)] mt-1">
+                        <span class="text-white font-bold text-lg">10</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Seller Reviews and Confirms</h3>
+                            <p class="text-gray-600 leading-relaxed">The seller checks your screenshot against their
+                                bank records. Once satisfied, they confirm payment received on the platform.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 11 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-neon-green flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(124,179,66,0.5)] mt-1">
+                        <span class="text-white font-bold text-lg">11</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-deep-forest p-6 md:p-8 rounded-2xl shadow-xl border border-neon-green/30 hover:shadow-[0_15px_40px_rgba(124,179,66,0.2)] w-full text-white">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-neon-green mb-3">USDT Released to Your Wallet</h3>
+                            <p class="text-gray-300 leading-relaxed">The escrowed USDT is released to your PayBee wallet
+                                immediately after seller confirmation. The trade is marked complete and archived with a
+                                full audit trail.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SELLING TIMELINE (Hidden by Default) -->
+        <div id="timeline-sell"
+            class="timeline-container w-full transition-opacity duration-500 opacity-0 hidden z-0 pointer-events-none">
+            <div class="space-y-12 pb-12">
+
+                <!-- Step 1 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-gray-400 flex items-center justify-center shrink-0 mt-1">
+                        <span class="text-white font-bold text-lg">1</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Account Created by Admin</h3>
+                            <p class="text-gray-600 leading-relaxed">Contact PayBee to open a seller account. Our admin
+                                team creates your account, assigns your role, and activates your wallet and trading
+                                permissions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-gray-400 flex items-center justify-center shrink-0 mt-1">
+                        <span class="text-white font-bold text-lg">2</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Deposit Your USDT</h3>
+                            <p class="text-gray-600 leading-relaxed">Send USDT to your assigned PayBee wallet address on
+                                TRC20, ERC20, or BEP20. Submit your TXID on the dashboard once sent.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-gray-400 flex items-center justify-center shrink-0 mt-1">
+                        <span class="text-white font-bold text-lg">3</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Admin Verifies Your Deposit</h3>
+                            <p class="text-gray-600 leading-relaxed">Admin queries the blockchain explorer, confirms
+                                your transaction on-chain, and credits your balance. You are notified once your wallet
+                                is funded and ready.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-honey-gold flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(255,193,7,0.4)] mt-1">
+                        <span class="text-deep-forest font-bold text-lg">4</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full border-l-4 border-l-honey-gold">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Buyer Initiates a Trade With You</h3>
+                            <p class="text-gray-600 leading-relaxed">When a buyer on the platform selects you for a
+                                trade, the platform automatically locks the relevant USDT amount from your wallet into
+                                hard-locked escrow. You receive a trade notification with a countdown timer.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-gray-400 flex items-center justify-center shrink-0 mt-1">
+                        <span class="text-white font-bold text-lg">5</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Your Bank Details Are Shared Securely
+                            </h3>
+                            <p class="text-gray-600 leading-relaxed">The platform transmits your bank details to the
+                                matched buyer only — encrypted and restricted to that trade session. No one else can see
+                                them.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 6 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-gray-400 flex items-center justify-center shrink-0 mt-1">
+                        <span class="text-white font-bold text-lg">6</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Buyer Sends the Bank Transfer</h3>
+                            <p class="text-gray-600 leading-relaxed">The buyer has a set payment window to complete
+                                their bank transfer and upload a screenshot of the transaction as proof.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 7 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-hive-green flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(46,125,50,0.4)] mt-1">
+                        <span class="text-white font-bold text-lg">7</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Review the Payment Proof</h3>
+                            <p class="text-gray-600 leading-relaxed">You receive a notification when the buyer uploads
+                                their proof. Review the screenshot carefully against your actual bank statement. Take
+                                your time — do not confirm until you have verified the transfer in your account.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 8 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-hive-green flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(46,125,50,0.4)] mt-1">
+                        <span class="text-white font-bold text-lg">8</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl w-full border-l-4 border-l-hive-green">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-deep-forest mb-3">Confirm or Dispute</h3>
+                            <p class="text-gray-600 leading-relaxed">If the payment matches — confirm receipt inside the
+                                platform. This action requires your PIN or 2FA token to prevent accidental releases. If
+                                something is wrong — raise a dispute immediately and admin will step in.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 9 -->
+                <div class="timeline-step flex items-start gap-6 relative z-10">
+                    <div
+                        class="w-10 h-10 md:w-14 md:h-14 hexagon bg-neon-green flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(124,179,66,0.5)] mt-1">
+                        <span class="text-white font-bold text-lg">9</span>
+                    </div>
+                    <div
+                        class="tilt-card bg-deep-forest p-6 md:p-8 rounded-2xl shadow-xl border border-neon-green/30 hover:shadow-[0_15px_40px_rgba(124,179,66,0.2)] w-full text-white">
+                        <div class="tilt-content">
+                            <h3 class="font-bold text-xl text-neon-green mb-3">Trade Closed, Funds Settled</h3>
+                            <p class="text-gray-300 leading-relaxed">Once you confirm, the escrowed USDT is released to
+                                the buyer. Your bank holds the fiat. Your ledger is updated with any applicable fee
+                                deduction. The trade is archived with a full audit trail.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <!-- 4. Disputes Callout Box -->
+    <section class="max-w-3xl mx-auto px-6 pb-24 mt-10 relative z-20" id="disputes-section">
+        <div
+            class="bg-honey-gold/10 border border-honey-gold/30 rounded-2xl p-8 flex flex-col md:flex-row items-center md:items-start gap-6">
+            <div class="w-16 h-16 rounded-full bg-honey-gold/20 flex items-center justify-center shrink-0 mt-1">
+                <svg class="w-8 h-8 text-honey-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                    </path>
+                </svg>
+            </div>
+            <div class="text-center md:text-left">
+                <h3 class="font-bold text-xl text-deep-forest mb-2">Disputes</h3>
+                <p class="text-gray-600 leading-relaxed">If you cannot resolve a trade — because payment wasn't sent,
+                    the screenshot doesn't match, or either party is unresponsive — raise a dispute directly on the
+                    trade page. Our admin team reviews the evidence submitted by both sides, contacts the relevant
+                    parties if needed, and issues a force-release or force-refund based on what the proof shows. <strong
+                        class="text-deep-forest font-bold">Most disputes are resolved within 24 hours.</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-deep-forest text-gray-400 pt-20 pb-10 border-t border-white/5 bg-[#0F1014] z-20 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+
+                <div class="lg:col-span-2">
+                    <img src="assets/images/logo.png" alt="PayBee Logo"
+                        class="h-12 w-auto object-contain origin-left mb-6">
+                    <p class="text-sm leading-relaxed mb-8 max-w-sm">
+                        PayBee is a peer-to-peer exchange platform where you convert USDT into local currency and
+                        receive it straight to your bank account. Secure, transparent, and protected by our Escrow
+                        Engine.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://t.me/paybeelive" target="_blank"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-neon-green hover:text-deep-forest transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.198-.054-.31-.346-.116l-6.405 4.032-2.766-.864c-.602-.188-.611-.602.125-.89l10.824-4.17c.502-.182.936.113.848.853z" />
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/paybeelive" target="_blank"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-neon-green hover:text-deep-forest transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                        </a>
+                        <a href="https://instagram.com/paybee.live" target="_blank"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-neon-green hover:text-deep-forest transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-bold mb-6 tracking-wide">Platform</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li><a href="how-it-works.html"
+                                class="hover:text-neon-green transition-colors text-neon-green">How It Works</a></li>
+                        <li><a href="features.html" class="hover:text-neon-green transition-colors">Features</a></li>
+                        <li><a href="security.html" class="hover:text-neon-green transition-colors">Security</a></li>
+                        <li><a href="fees.html" class="hover:text-neon-green transition-colors">Fees</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-bold mb-6 tracking-wide">Company</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li><a href="about.html" class="hover:text-neon-green transition-colors">About Us</a></li>
+                        <li><a href="faq.html" class="hover:text-neon-green transition-colors">FAQ</a></li>
+                        <li><a href="contact.html" class="hover:text-neon-green transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-neon-green transition-colors">Download App</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-bold mb-6 tracking-wide">Support</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li><a href="mailto:support@paybee.live"
+                                class="hover:text-neon-green transition-colors flex items-center gap-2"><svg
+                                    class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                    </path>
+                                </svg> support@paybee.live</a></li>
+                        <li><a href="terms-of-service.html" class="hover:text-neon-green transition-colors">Terms of Service</a></li>
+                        <li><a href="privacy-policy.html" class="hover:text-neon-green transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-gray-500">© 2026 PayBee.live. All rights reserved.</p>
+                <div class="flex gap-4 text-xs text-gray-500">
+                    <span class="flex items-center gap-1">
+                        <div class="w-2 h-2 rounded-full bg-neon-green"></div> Systems Operational
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI Assistant Widget -->
+    <div id="ai-widget-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <div id="ai-chat-window"
+            class="hidden w-80 sm:w-96 bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200 mb-4 transform transition-all origin-bottom-right scale-0">
+            <div class="bg-deep-forest text-white p-4 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-neon-green flex items-center justify-center text-deep-forest">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm leading-tight">PayBee Assistant</h4>
+                        <span class="text-xs text-neon-green flex items-center gap-1"><span
+                                class="w-1.5 h-1.5 bg-neon-green rounded-full"></span> Online</span>
+                    </div>
+                </div>
+                <button onclick="toggleChat()" class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <div id="ai-chat-body" class="p-4 h-80 overflow-y-auto bg-gray-50 flex flex-col gap-3 text-sm">
+                <div
+                    class="self-start max-w-[85%] bg-white p-3 rounded-2xl rounded-tl-sm border border-gray-100 shadow-sm text-gray-700">
+                    Hello! I'm the PayBee AI assistant. Need clarification on any step in the Buying or Selling process?
+                    Just ask!
+                </div>
+            </div>
+
+            <form id="ai-chat-form" class="p-3 bg-white border-t border-gray-100 flex gap-2"
+                onsubmit="handleChatSubmit(event)">
+                <input type="text" id="ai-chat-input" placeholder="Ask a question..."
+                    class="w-full bg-gray-100 text-charcoal px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-hive-green/50 text-sm"
+                    required>
+                <button type="submit"
+                    class="bg-hive-green text-white p-2 rounded-full hover:bg-neon-green hover:text-deep-forest transition-colors shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+        <button id="ai-fab" onclick="toggleChat()"
+            class="w-14 h-14 bg-honey-gold text-deep-forest rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300 relative group">
+            <div class="absolute inset-0 bg-honey-gold rounded-full animate-ping opacity-20"></div>
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z">
+                </path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- MASTER INITIALIZATION ---
+        function initApp() {
+            // Initial Hero Load Animation
+            gsap.from(".hero-el", { y: 30, opacity: 0, duration: 0.8, stagger: 0.15, ease: "power3.out" });
+
+            // Initialize timeline node animations
+            setupTimelineAnimations('#timeline-buy');
+
+            // 3D Tilt Effect
+            const tiltCards = document.querySelectorAll('.tilt-card');
+            tiltCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -5; // Subtle tilt for timeline
+                    const rotateY = ((x - centerX) / centerX) * 5;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                });
+            });
+
+            // Force scroll trigger to recalculate after all assets and sections are rendered
+            window.addEventListener('load', () => {
+                setTimeout(() => { ScrollTrigger.refresh(); }, 1000);
+            });
+            setTimeout(() => { ScrollTrigger.refresh(); }, 500);
+        }
+
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            setTimeout(initApp, 1);
+        } else {
+            document.addEventListener('DOMContentLoaded', initApp);
+        }
+
+        // Setup scroll animations for a specific timeline container
+        function setupTimelineAnimations(containerId) {
+            const nodes = document.querySelectorAll(`${containerId} .timeline-step:not(.initialized)`);
+            nodes.forEach((node, index) => {
+                node.classList.add('initialized');
+                gsap.fromTo(node,
+                    { y: 50, opacity: 0 },
+                    {
+                        scrollTrigger: { trigger: node, start: "top 90%" },
+                        y: 0, opacity: 1, duration: 0.6, ease: "back.out(1.2)"
+                    }
+                );
+            });
+        }
+
+        // --- TAB SWITCHING LOGIC ---
+        window.switchTimeline = function (tab) {
+            const indicator = document.getElementById('tab-indicator');
+            const btnBuy = document.getElementById('btn-tab-buy');
+            const btnSell = document.getElementById('btn-tab-sell');
+            const timelineBuy = document.getElementById('timeline-buy');
+            const timelineSell = document.getElementById('timeline-sell');
+
+            if (tab === 'sell') {
+                indicator.style.transform = 'translateX(100%)';
+                btnBuy.classList.replace('text-hive-green', 'text-gray-500');
+                btnSell.classList.replace('text-gray-500', 'text-hive-green');
+
+                timelineBuy.classList.replace('opacity-100', 'opacity-0');
+                timelineBuy.classList.add('pointer-events-none');
+
+                setTimeout(() => {
+                    timelineBuy.classList.replace('block', 'hidden');
+                    timelineSell.classList.replace('hidden', 'block');
+
+                    setTimeout(() => {
+                        timelineSell.classList.remove('pointer-events-none');
+                        timelineSell.classList.replace('opacity-0', 'opacity-100');
+                        setupTimelineAnimations('#timeline-sell');
+                        ScrollTrigger.refresh();
+                    }, 50);
+                }, 300);
+            } else {
+                indicator.style.transform = 'translateX(0)';
+                btnSell.classList.replace('text-hive-green', 'text-gray-500');
+                btnBuy.classList.replace('text-gray-500', 'text-hive-green');
+
+                timelineSell.classList.replace('opacity-100', 'opacity-0');
+                timelineSell.classList.add('pointer-events-none');
+
+                setTimeout(() => {
+                    timelineSell.classList.replace('block', 'hidden');
+                    timelineBuy.classList.replace('hidden', 'block');
+
+                    setTimeout(() => {
+                        timelineBuy.classList.remove('pointer-events-none');
+                        timelineBuy.classList.replace('opacity-0', 'opacity-100');
+                        setupTimelineAnimations('#timeline-buy');
+                        ScrollTrigger.refresh();
+                    }, 50);
+                }, 300);
+            }
+        }
+
+        // --- GLOBAL EVENT LISTENERS ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (!nav) return;
+            if (window.scrollY > 10) {
+                nav.classList.add('shadow-lg');
+            } else {
+                nav.classList.remove('shadow-lg');
+            }
+
+            // Keep sticky tabs shadow prominent
+            const stickyTabs = document.getElementById('sticky-tabs');
+            if (window.scrollY > 300) {
+                stickyTabs.classList.add('shadow-md');
+            } else {
+                stickyTabs.classList.remove('shadow-md');
+            }
+        });
+
+        // --- GEMINI AI ASSISTANT LOGIC ---
+        const chatWindow = document.getElementById('ai-chat-window');
+        const chatBody = document.getElementById('ai-chat-body');
+        const chatInput = document.getElementById('ai-chat-input');
+        let isChatOpen = false;
+        const apiKey = "";
+
+        window.toggleChat = function () {
+            isChatOpen = !isChatOpen;
+            if (isChatOpen) {
+                chatWindow.classList.remove('hidden');
+                setTimeout(() => {
+                    chatWindow.classList.remove('scale-0');
+                    chatWindow.classList.add('scale-100');
+                    chatInput.focus();
+                }, 10);
+            } else {
+                chatWindow.classList.remove('scale-100');
+                chatWindow.classList.add('scale-0');
+                setTimeout(() => chatWindow.classList.add('hidden'), 300);
+            }
+        }
+
+        function appendMessage(text, isUser = false, isTyping = false) {
+            const wrapper = document.createElement('div');
+            wrapper.className = `max-w-[85%] p-3 rounded-2xl shadow-sm text-sm ${isUser ? 'self-end bg-hive-green text-white rounded-tr-sm' : 'self-start bg-white border border-gray-100 text-gray-700 rounded-tl-sm prose'
+                }`;
+
+            if (isTyping) {
+                wrapper.id = "ai-typing-indicator";
+                wrapper.innerHTML = `<span class="flex gap-1 items-center h-5"><span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span><span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></span><span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></span></span>`;
+            } else {
+                let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/\n/g, '<br>');
+                wrapper.innerHTML = formattedText;
+            }
+
+            chatBody.appendChild(wrapper);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        window.handleChatSubmit = async function (e) {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            appendMessage(text, true);
+            chatInput.value = '';
+            appendMessage('', false, true);
+
+            try {
+                const response = await callGeminiWithBackoff(text);
+                const typingIndicator = document.getElementById('ai-typing-indicator');
+                if (typingIndicator) typingIndicator.remove();
+                appendMessage(response);
+            } catch (error) {
+                const typingIndicator = document.getElementById('ai-typing-indicator');
+                if (typingIndicator) typingIndicator.remove();
+                appendMessage("I'm sorry, I'm having trouble connecting right now. Please try again later.");
+                console.error("Gemini API Error:", error);
+            }
+        }
+
+        async function callGeminiWithBackoff(promptText, retries = 5) {
+            const systemInstruction = "You are the PayBee AI Assistant. You are currently on the 'How It Works' page. You help users understand the steps for buying and selling USDT using fiat bank transfers, our escrow protection, and the dispute process. Keep answers brief, helpful, and professional.";
+            const payload = { contents: [{ parts: [{ text: promptText }] }], systemInstruction: { parts: [{ text: systemInstruction }] } };
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const delays = [1000, 2000, 4000, 8000, 16000];
+
+            for (let i = 0; i <= retries; i++) {
+                try {
+                    const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const data = await response.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process that.";
+                } catch (error) {
+                    if (i === retries) throw error;
+                    await new Promise(resolve => setTimeout(resolve, delays[i]));
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

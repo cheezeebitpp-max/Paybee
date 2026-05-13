@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayBee | Get in Touch</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'hive-green': '#2E7D32',
+                        'neon-green': '#7CB342',
+                        'honey-gold': '#FFC107',
+                        'deep-forest': '#0F1014', /* Sleek Grey-Black */
+                        'snow-white': '#FAFAFA',
+                        'charcoal': '#1A1A1A',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'display': ['Space Grotesk', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 3D Tilt utility */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            transition: transform 0.1s ease-out;
+        }
+
+        .tilt-content {
+            transform: translateZ(30px);
+        }
+
+        /* Dotted Map Pattern */
+        .map-bg {
+            background-image: radial-gradient(rgba(124, 179, 66, 0.4) 2px, transparent 2px);
+            background-size: 20px 20px;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+        }
+
+        /* AI Chat Markdown Styling */
+        .prose p {
+            margin-bottom: 0.5rem;
+        }
+
+        .prose strong {
+            color: #FFC107;
+        }
+    </style>
+</head>
+
+<body class="bg-snow-white text-charcoal font-sans antialiased selection:bg-neon-green selection:text-deep-forest">
+
+    <!-- Header (Dark) -->
+    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-4 transition-all duration-300 bg-deep-forest/90 backdrop-blur-lg border-b border-white/10"
+        id="navbar">
+        <div class="max-w-7xl mx-auto flex justify-between items-center rounded-full px-6 py-3">
+            <a href="index.html" class="flex items-center gap-3 cursor-pointer">
+                <img src="assets/images/logo.png" alt="PayBee Logo"
+                    class="h-12 w-auto object-contain origin-left scale-125">
+            </a>
+            <div class="hidden md:flex gap-8 items-center font-medium text-sm text-snow-white">
+                <a href="how-it-works.html" class="hover:text-neon-green transition-colors">How It Works</a>
+                <a href="features.html" class="hover:text-neon-green transition-colors">Features</a>
+                <a href="security.html" class="hover:text-neon-green transition-colors">Security</a>
+                <a href="fees.html" class="hover:text-neon-green transition-colors">Fees</a>
+            </div>
+            <div class="flex gap-4 items-center">
+                <a href="login.html"
+                    class="hidden md:block text-sm text-snow-white hover:text-neon-green transition-colors font-medium">Log
+                    In</a>
+                <a href="register.html"
+                    class="px-5 py-2 text-sm font-bold bg-honey-gold text-deep-forest rounded-full hover:scale-105 transition-transform shadow-[0_0_15px_rgba(255,193,7,0.3)]">Sign
+                    Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Hero Section ("The Hub") -->
+    <section class="relative pt-40 pb-32 bg-deep-forest text-snow-white overflow-hidden border-b border-white/5">
+        <!-- Abstract Nodes Background -->
+        <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none flex">
+            <div class="w-full md:w-1/2 relative h-full">
+                <!-- Left ambient glows -->
+                <div
+                    class="absolute top-0 right-0 w-96 h-96 bg-hive-green/10 rounded-full filter blur-[120px] animate-pulse-slow">
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 relative h-full hidden md:block">
+                <!-- Right Map Graphic -->
+                <div class="absolute inset-0 map-bg opacity-40 transform rotate-12 scale-150 animate-float"></div>
+                <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-neon-green/10 rounded-full filter blur-[80px]">
+                </div>
+                <!-- Ping dots representing global presence -->
+                <div class="absolute top-[40%] left-[30%] w-3 h-3 bg-honey-gold rounded-full shadow-[0_0_15px_#FFC107]">
+                    <div class="absolute inset-0 bg-honey-gold rounded-full animate-ping opacity-50"></div>
+                </div>
+                <div class="absolute top-[60%] right-[40%] w-3 h-3 bg-neon-green rounded-full shadow-[0_0_15px_#7CB342]"
+                    style="animation-delay: 1s;">
+                    <div class="absolute inset-0 bg-neon-green rounded-full animate-ping opacity-50"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-12">
+            <div class="w-full md:w-1/2 text-center md:text-left">
+                <div
+                    class="inline-block px-4 py-1.5 rounded-full border border-neon-green/30 bg-neon-green/10 text-neon-green text-xs font-bold tracking-wide mb-6 uppercase">
+                    Available 24/7
+                </div>
+                <h1 class="hero-el font-display text-5xl md:text-7xl font-bold mb-6">
+                    Get in <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-honey-gold">Touch.</span>
+                </h1>
+                <p class="hero-el text-xl text-gray-400 max-w-lg mx-auto md:mx-0 leading-relaxed mb-8">
+                    Our team is available 24 hours a day. Whether you need help with a trade, have a question about your
+                    account, or want to explore a business partnership, we're here.
+                </p>
+                <div class="hero-el flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#departments"
+                        class="px-8 py-3 bg-hive-green text-white font-bold rounded-full text-center hover:bg-neon-green hover:text-deep-forest transition-colors shadow-[0_0_15px_rgba(46,125,50,0.4)]">View
+                        Departments</a>
+                    <button onclick="toggleChat()"
+                        class="px-8 py-3 glass-panel text-white font-bold rounded-full text-center hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z">
+                            </path>
+                        </svg>
+                        Ask AI Assistant
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Contact Grid (Departments) -->
+    <section id="departments" class="py-24 bg-snow-white">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                <!-- General Support -->
+                <div class="tilt-card group fade-in-up">
+                    <div
+                        class="tilt-content bg-white border border-gray-200 rounded-[2rem] p-10 h-full shadow-sm hover:shadow-2xl transition-all duration-300 relative overflow-hidden flex flex-col">
+                        <div
+                            class="absolute -right-10 -top-10 w-40 h-40 bg-hive-green/5 rounded-full transition-transform duration-500 group-hover:scale-150">
+                        </div>
+                        <div
+                            class="w-16 h-16 rounded-2xl bg-hive-green/10 flex items-center justify-center text-hive-green mb-8 relative z-10 group-hover:bg-hive-green group-hover:text-white transition-colors duration-300">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="font-display text-2xl font-bold text-deep-forest mb-3 relative z-10">General Support
+                        </h3>
+                        <p class="text-gray-600 mb-6 flex-grow relative z-10">For account help, deposit questions, trade
+                            issues, and disputes. Live chat is also available on the website and app.</p>
+
+                        <div class="border-t border-gray-100 pt-6 mt-auto relative z-10">
+                            <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2">Email Address</p>
+                            <a href="mailto:support@paybee.live"
+                                class="text-lg font-bold text-hive-green hover:text-neon-green transition-colors flex items-center gap-2">
+                                support@paybee.live
+                                <svg class="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                            <p class="text-sm text-gray-500 mt-2 flex items-center gap-2"><span
+                                    class="w-2 h-2 rounded-full bg-neon-green"></span> Expected response: within 2 hours
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Account Applications -->
+                <div class="tilt-card group fade-in-up" style="transition-delay: 100ms;">
+                    <div
+                        class="tilt-content bg-white border border-gray-200 rounded-[2rem] p-10 h-full shadow-sm hover:shadow-2xl transition-all duration-300 relative overflow-hidden flex flex-col">
+                        <div
+                            class="absolute -right-10 -top-10 w-40 h-40 bg-neon-green/5 rounded-full transition-transform duration-500 group-hover:scale-150">
+                        </div>
+                        <div
+                            class="w-16 h-16 rounded-2xl bg-neon-green/10 flex items-center justify-center text-hive-green mb-8 relative z-10 group-hover:bg-neon-green group-hover:text-deep-forest transition-colors duration-300">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-display text-2xl font-bold text-deep-forest mb-3 relative z-10">New Account
+                            Applications</h3>
+                        <p class="text-gray-600 mb-6 flex-grow relative z-10">To open a buyer or seller account, contact
+                            us to begin the admin-verified registration process.</p>
+
+                        <div class="border-t border-gray-100 pt-6 mt-auto relative z-10">
+                            <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2">Email Address</p>
+                            <a href="mailto:accounts@paybee.live"
+                                class="text-lg font-bold text-hive-green hover:text-neon-green transition-colors flex items-center gap-2">
+                                accounts@paybee.live
+                                <svg class="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business & OTC Inquiries -->
+                <div class="tilt-card group fade-in-up">
+                    <div
+                        class="tilt-content bg-deep-forest border border-gray-800 rounded-[2rem] p-10 h-full shadow-xl hover:shadow-[0_20px_50px_rgba(255,193,7,0.15)] transition-all duration-300 relative overflow-hidden flex flex-col">
+                        <div
+                            class="absolute -right-10 -top-10 w-40 h-40 bg-honey-gold/10 rounded-full transition-transform duration-500 group-hover:scale-150">
+                        </div>
+                        <div
+                            class="w-16 h-16 rounded-2xl bg-honey-gold/20 flex items-center justify-center text-honey-gold mb-8 relative z-10 group-hover:bg-honey-gold group-hover:text-deep-forest transition-colors duration-300">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="font-display text-2xl font-bold text-white mb-3 relative z-10">Business & OTC</h3>
+                        <p class="text-gray-400 mb-6 flex-grow relative z-10">For high-volume trading arrangements, VIP
+                            desk access, and institutional business partnerships.</p>
+
+                        <div class="border-t border-gray-800 pt-6 mt-auto relative z-10">
+                            <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2">Email Address</p>
+                            <a href="mailto:business@paybee.live"
+                                class="text-lg font-bold text-honey-gold hover:text-white transition-colors flex items-center gap-2">
+                                business@paybee.live
+                                <svg class="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Legal & Media -->
+                <div class="tilt-card group fade-in-up" style="transition-delay: 100ms;">
+                    <div
+                        class="tilt-content bg-white border border-gray-200 rounded-[2rem] p-10 h-full shadow-sm hover:shadow-2xl transition-all duration-300 relative overflow-hidden flex flex-col">
+                        <div
+                            class="absolute -right-10 -top-10 w-40 h-40 bg-gray-100 rounded-full transition-transform duration-500 group-hover:scale-150">
+                        </div>
+                        <div
+                            class="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-600 mb-8 relative z-10 group-hover:bg-gray-800 group-hover:text-white transition-colors duration-300">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="font-display text-2xl font-bold text-deep-forest mb-3 relative z-10">Compliance,
+                            Legal & Press</h3>
+                        <p class="text-gray-600 mb-6 flex-grow relative z-10">For official law enforcement inquiries,
+                            regulatory compliance, media requests, and press relations.</p>
+
+                        <div class="border-t border-gray-100 pt-6 mt-auto relative z-10 flex flex-col gap-4">
+                            <div>
+                                <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Compliance &
+                                    Legal</p>
+                                <a href="mailto:legal@paybee.live"
+                                    class="text-base font-bold text-gray-800 hover:text-hive-green transition-colors flex items-center gap-2">
+                                    legal@paybee.live
+                                    <svg class="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Press & Media
+                                </p>
+                                <a href="mailto:press@paybee.live"
+                                    class="text-base font-bold text-gray-800 hover:text-hive-green transition-colors flex items-center gap-2">
+                                    press@paybee.live
+                                    <svg class="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Socials Banner -->
+    <section class="bg-hive-green py-20 relative overflow-hidden border-t border-gray-200">
+        <div class="absolute inset-0"
+            style="background-image: radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px); background-size: 20px 20px;">
+        </div>
+
+        <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
+            <h2 class="font-display text-4xl font-bold text-white mb-4">Follow PayBee</h2>
+            <p class="text-white/80 text-lg mb-12">Stay updated on platform news, new features, and promotions across
+                our official channels.</p>
+
+            <div class="flex flex-wrap justify-center gap-6">
+                <!-- Telegram -->
+                <a href="https://t.me/paybeelive" target="_blank"
+                    class="flex items-center gap-4 px-8 py-4 bg-white/10 hover:bg-white backdrop-blur-sm rounded-full text-white hover:text-hive-green font-bold transition-all duration-300 hover:scale-105 border border-white/20 group">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.198-.054-.31-.346-.116l-6.405 4.032-2.766-.864c-.602-.188-.611-.602.125-.89l10.824-4.17c.502-.182.936.113.848.853z" />
+                    </svg>
+                    t.me/paybeelive
+                </a>
+
+                <!-- Twitter / X -->
+                <a href="https://twitter.com/paybeelive" target="_blank"
+                    class="flex items-center gap-4 px-8 py-4 bg-white/10 hover:bg-white backdrop-blur-sm rounded-full text-white hover:text-hive-green font-bold transition-all duration-300 hover:scale-105 border border-white/20 group">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                    @paybeelive
+                </a>
+
+                <!-- Instagram -->
+                <a href="https://instagram.com/paybee.live" target="_blank"
+                    class="flex items-center gap-4 px-8 py-4 bg-white/10 hover:bg-white backdrop-blur-sm rounded-full text-white hover:text-hive-green font-bold transition-all duration-300 hover:scale-105 border border-white/20 group">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                    </svg>
+                    @paybee.live
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-deep-forest text-gray-400 pt-20 pb-10 border-t border-white/5 bg-[#0F1014] z-20 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+
+                <div class="lg:col-span-2">
+                    <img src="assets/images/logo.png" alt="PayBee Logo"
+                        class="h-12 w-auto object-contain origin-left mb-6">
+                    <p class="text-sm leading-relaxed mb-8 max-w-sm">
+                        PayBee is a peer-to-peer exchange platform where you convert USDT into local currency and
+                        receive it straight to your bank account. Secure, transparent, and protected by our Escrow
+                        Engine.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://t.me/paybeelive" target="_blank"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-neon-green hover:text-deep-forest transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.198-.054-.31-.346-.116l-6.405 4.032-2.766-.864c-.602-.188-.611-.602.125-.89l10.824-4.17c.502-.182.936.113.848.853z" />
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/paybeelive" target="_blank"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-neon-green hover:text-deep-forest transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                        </a>
+                        <a href="https://instagram.com/paybee.live" target="_blank"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-neon-green hover:text-deep-forest transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-bold mb-6 tracking-wide">Platform</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li><a href="how-it-works.html" class="hover:text-neon-green transition-colors">How It Works</a>
+                        </li>
+                        <li><a href="features.html" class="hover:text-neon-green transition-colors">Features</a></li>
+                        <li><a href="security.html" class="hover:text-neon-green transition-colors">Security</a></li>
+                        <li><a href="fees.html" class="hover:text-neon-green transition-colors">Fees</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-bold mb-6 tracking-wide">Company</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li><a href="about.html" class="hover:text-neon-green transition-colors">About Us</a></li>
+                        <li><a href="faq.html" class="hover:text-neon-green transition-colors">FAQ</a></li>
+                        <li><a href="contact.html" class="hover:text-neon-green transition-colors text-neon-green">Contact Us</a>
+                        </li>
+                        <li><a href="#" class="hover:text-neon-green transition-colors">Download App</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-bold mb-6 tracking-wide">Support</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li><a href="mailto:support@paybee.live"
+                                class="hover:text-neon-green transition-colors flex items-center gap-2 text-neon-green"><svg
+                                    class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                    </path>
+                                </svg> support@paybee.live</a></li>
+                        <li><a href="terms-of-service.html" class="hover:text-neon-green transition-colors">Terms of Service</a></li>
+                        <li><a href="privacy-policy.html" class="hover:text-neon-green transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-gray-500">© 2026 PayBee.live. All rights reserved.</p>
+                <div class="flex gap-4 text-xs text-gray-500">
+                    <span class="flex items-center gap-1">
+                        <div class="w-2 h-2 rounded-full bg-neon-green"></div> Systems Operational
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI Assistant Widget -->
+    <div id="ai-widget-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <div id="ai-chat-window"
+            class="hidden w-80 sm:w-96 bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200 mb-4 transform transition-all origin-bottom-right scale-0">
+            <div class="bg-deep-forest text-white p-4 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-neon-green flex items-center justify-center text-deep-forest">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm leading-tight">PayBee Assistant</h4>
+                        <span class="text-xs text-neon-green flex items-center gap-1"><span
+                                class="w-1.5 h-1.5 bg-neon-green rounded-full"></span> Online</span>
+                    </div>
+                </div>
+                <button onclick="toggleChat()" class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <div id="ai-chat-body" class="p-4 h-80 overflow-y-auto bg-gray-50 flex flex-col gap-3 text-sm">
+                <div
+                    class="self-start max-w-[85%] bg-white p-3 rounded-2xl rounded-tl-sm border border-gray-100 shadow-sm text-gray-700">
+                    Hello! I'm the PayBee AI assistant. I can help route your inquiry to the correct department
+                    (Support, Business, or Legal). What do you need help with?
+                </div>
+            </div>
+
+            <form id="ai-chat-form" class="p-3 bg-white border-t border-gray-100 flex gap-2"
+                onsubmit="handleChatSubmit(event)">
+                <input type="text" id="ai-chat-input" placeholder="Ask a question..."
+                    class="w-full bg-gray-100 text-charcoal px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-hive-green/50 text-sm"
+                    required>
+                <button type="submit"
+                    class="bg-hive-green text-white p-2 rounded-full hover:bg-neon-green hover:text-deep-forest transition-colors shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+        <button id="ai-fab" onclick="toggleChat()"
+            class="w-14 h-14 bg-honey-gold text-deep-forest rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300 relative group">
+            <div class="absolute inset-0 bg-honey-gold rounded-full animate-ping opacity-20"></div>
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z">
+                </path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- MASTER INITIALIZATION ---
+        function initApp() {
+            // Initial Hero Load Animation
+            gsap.from(".hero-el", { y: 30, opacity: 0, duration: 0.8, stagger: 0.15, ease: "power3.out" });
+
+            // Fade in up animation for cards
+            gsap.from(".fade-in-up", {
+                scrollTrigger: { trigger: "#departments", start: "top 80%" },
+                y: 50, opacity: 0, duration: 0.8, stagger: 0.15, ease: "power2.out"
+            });
+
+            // 3D Tilt Effect
+            const tiltCards = document.querySelectorAll('.tilt-card');
+            tiltCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -8;
+                    const rotateY = ((x - centerX) / centerX) * 8;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                });
+            });
+
+            // Force scroll trigger to recalculate after all assets and sections are rendered
+            window.addEventListener('load', () => {
+                setTimeout(() => { ScrollTrigger.refresh(); }, 1000);
+            });
+            setTimeout(() => { ScrollTrigger.refresh(); }, 500);
+        }
+
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            setTimeout(initApp, 1);
+        } else {
+            document.addEventListener('DOMContentLoaded', initApp);
+        }
+
+        // --- GLOBAL EVENT LISTENERS ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (!nav) return;
+            if (window.scrollY > 10) {
+                nav.classList.add('shadow-lg');
+            } else {
+                nav.classList.remove('shadow-lg');
+            }
+        });
+
+        // --- GEMINI AI ASSISTANT LOGIC ---
+        const chatWindow = document.getElementById('ai-chat-window');
+        const chatBody = document.getElementById('ai-chat-body');
+        const chatInput = document.getElementById('ai-chat-input');
+        let isChatOpen = false;
+        const apiKey = "";
+
+        window.toggleChat = function () {
+            isChatOpen = !isChatOpen;
+            if (isChatOpen) {
+                chatWindow.classList.remove('hidden');
+                setTimeout(() => {
+                    chatWindow.classList.remove('scale-0');
+                    chatWindow.classList.add('scale-100');
+                    chatInput.focus();
+                }, 10);
+            } else {
+                chatWindow.classList.remove('scale-100');
+                chatWindow.classList.add('scale-0');
+                setTimeout(() => chatWindow.classList.add('hidden'), 300);
+            }
+        }
+
+        function appendMessage(text, isUser = false, isTyping = false) {
+            const wrapper = document.createElement('div');
+            wrapper.className = `max-w-[85%] p-3 rounded-2xl shadow-sm text-sm ${isUser ? 'self-end bg-hive-green text-white rounded-tr-sm' : 'self-start bg-white border border-gray-100 text-gray-700 rounded-tl-sm prose'
+                }`;
+
+            if (isTyping) {
+                wrapper.id = "ai-typing-indicator";
+                wrapper.innerHTML = `<span class="flex gap-1 items-center h-5"><span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span><span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></span><span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></span></span>`;
+            } else {
+                let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/\n/g, '<br>');
+                wrapper.innerHTML = formattedText;
+            }
+
+            chatBody.appendChild(wrapper);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        window.handleChatSubmit = async function (e) {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            appendMessage(text, true);
+            chatInput.value = '';
+            appendMessage('', false, true);
+
+            try {
+                const response = await callGeminiWithBackoff(text);
+                const typingIndicator = document.getElementById('ai-typing-indicator');
+                if (typingIndicator) typingIndicator.remove();
+                appendMessage(response);
+            } catch (error) {
+                const typingIndicator = document.getElementById('ai-typing-indicator');
+                if (typingIndicator) typingIndicator.remove();
+                appendMessage("I'm sorry, I'm having trouble connecting right now. Please try again later.");
+                console.error("Gemini API Error:", error);
+            }
+        }
+
+        async function callGeminiWithBackoff(promptText, retries = 5) {
+            const systemInstruction = "You are the PayBee AI Assistant. You are currently on the 'Contact' page. Guide users to the correct email: Support (support@paybee.live), Accounts (accounts@paybee.live), Business (business@paybee.live), Legal (legal@paybee.live), or Press (press@paybee.live). Keep answers brief, helpful, and professional.";
+            const payload = { contents: [{ parts: [{ text: promptText }] }], systemInstruction: { parts: [{ text: systemInstruction }] } };
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const delays = [1000, 2000, 4000, 8000, 16000];
+
+            for (let i = 0; i <= retries; i++) {
+                try {
+                    const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const data = await response.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process that.";
+                } catch (error) {
+                    if (i === retries) throw error;
+                    await new Promise(resolve => setTimeout(resolve, delays[i]));
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
