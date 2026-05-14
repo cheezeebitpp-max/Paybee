@@ -9,7 +9,8 @@ import {
   Settings, 
   LogOut,
   Menu,
-  User as UserIcon
+  User as UserIcon,
+  FileText
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -29,6 +30,7 @@ const AdminLayout: React.FC = () => {
     { name: 'Deposits', path: '/admin/deposits', icon: ArrowDownCircle },
     { name: 'Payouts', path: '/admin/payouts', icon: ArrowUpCircle },
     { name: 'Trades', path: '/admin/trades', icon: Repeat },
+    { name: 'Content CMS', path: '/admin/cms', icon: FileText },
     { name: 'Settings', path: '/admin/settings', icon: Settings },
   ];
 

@@ -11,12 +11,13 @@ dotenv.config();
 const prisma = new PrismaClient();
 const app = express();
 
+const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || "PAYBEE_SUPER_SECRET_KEY";
 const SUPABASE_JWT_SECRET = process.env.SUPABASE_JWT_SECRET;
 
 app.use(cors({
   origin: (origin, callback) => {
-    const allowedOrigins = ["https://paybee.live", "https://api.paybee.live", "http://localhost:3000", "http://localhost:5173"];
+    const allowedOrigins = ["https://app.paybee.live", "https://api.paybee.live", "http://localhost:3000", "http://localhost:3001", "http://localhost:5173"];
     if (!origin || allowedOrigins.includes(origin) || origin.endsWith(".paybee.live")) {
       callback(null, true);
     } else {
@@ -79,7 +80,7 @@ AUTH ROUTES
 ====================================
 */
 
-app.post("/login", async (req, res) => {
+app.post("/api/auth/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await prisma.user.findUnique({ where: { email } });
@@ -113,7 +114,7 @@ ADMIN ROUTES
 */
 
 // Dashboard Stats
-app.get("/admin/stats", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
+app.get("/api/admin/stats", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
   try {
     const [
       totalUsers,
@@ -145,7 +146,7 @@ app.get("/admin/stats", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), a
 });
 
 // User Management
-app.get("/admin/users", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
+app.get("/api/admin/users", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
   try {
     const users = await prisma.user.findMany({
       orderBy: { createdAt: "desc" }
@@ -156,7 +157,7 @@ app.get("/admin/users", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), a
   }
 });
 
-app.post("/admin/users", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
+app.post("/api/admin/users", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
   try {
     const { email, fullName, password } = req.body;
     const hashedPassword = await bcrypt.hash(password || "user123", 10);
@@ -177,7 +178,7 @@ app.post("/admin/users", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), 
   }
 });
 
-app.patch("/admin/users/:id", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
+app.patch("/api/admin/users/:id", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
   try {
     const { status, kycStatus, walletBalance } = req.body;
     const user = await prisma.user.update({
@@ -195,7 +196,7 @@ app.patch("/admin/users/:id", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN
 });
 
 // Deposit Management
-app.get("/admin/deposits", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
+app.get("/api/admin/deposits", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
   try {
     const deposits = await prisma.deposit.findMany({
       include: { user: { select: { fullName: true, email: true } } },
@@ -207,7 +208,7 @@ app.get("/admin/deposits", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"])
   }
 });
 
-app.patch("/admin/deposits/:id", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
+app.patch("/api/admin/deposits/:id", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
   try {
     const { status } = req.body;
     const deposit = await prisma.deposit.findUnique({ where: { id: req.params.id } });
@@ -234,7 +235,7 @@ app.patch("/admin/deposits/:id", authMiddleware, requireRole(["ADMIN", "SUPER_AD
 });
 
 // Payout Management
-app.get("/admin/payouts", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
+app.get("/api/admin/payouts", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
   try {
     const payouts = await prisma.payout.findMany({
       include: { user: { select: { fullName: true } } },
@@ -246,7 +247,7 @@ app.get("/admin/payouts", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]),
   }
 });
 
-app.patch("/admin/payouts/:id", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
+app.patch("/api/admin/payouts/:id", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
   try {
     const { status } = req.body;
     const payout = await prisma.payout.update({
@@ -260,7 +261,7 @@ app.patch("/admin/payouts/:id", authMiddleware, requireRole(["ADMIN", "SUPER_ADM
 });
 
 // Trade Monitoring
-app.get("/admin/trades", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
+app.get("/api/admin/trades", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
   try {
     const trades = await prisma.trade.findMany({
       orderBy: { createdAt: "desc" }
@@ -277,7 +278,7 @@ USER ROUTES
 ====================================
 */
 
-app.get("/user/me", authMiddleware, async (req, res) => {
+app.get("/api/user/me", authMiddleware, async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.user.id },
@@ -289,7 +290,7 @@ app.get("/user/me", authMiddleware, async (req, res) => {
   }
 });
 
-app.get("/user/deposits", authMiddleware, async (req, res) => {
+app.get("/api/user/deposits", authMiddleware, async (req, res) => {
   try {
     const deposits = await prisma.deposit.findMany({
       where: { userId: req.user.id },
@@ -301,7 +302,7 @@ app.get("/user/deposits", authMiddleware, async (req, res) => {
   }
 });
 
-app.post("/user/deposits", authMiddleware, async (req, res) => {
+app.post("/api/user/deposits", authMiddleware, async (req, res) => {
   try {
     const { amount, network, txid, proofUrl } = req.body;
     const deposit = await prisma.deposit.create({
@@ -320,7 +321,7 @@ app.post("/user/deposits", authMiddleware, async (req, res) => {
   }
 });
 
-app.get("/user/payouts", authMiddleware, async (req, res) => {
+app.get("/api/user/payouts", authMiddleware, async (req, res) => {
   try {
     const payouts = await prisma.payout.findMany({
       where: { userId: req.user.id },
@@ -332,7 +333,7 @@ app.get("/user/payouts", authMiddleware, async (req, res) => {
   }
 });
 
-app.post("/user/payouts", authMiddleware, async (req, res) => {
+app.post("/api/user/payouts", authMiddleware, async (req, res) => {
   try {
     const { amount, bankName, accountNumber, ifsc } = req.body;
     
@@ -392,6 +393,134 @@ app.post("/setup-super-admin", async (req, res) => {
   }
 });
 
+/*
+====================================
+CMS PUBLIC ROUTES
+====================================
+*/
+
+app.get("/api/public/content/:slug", async (req, res) => {
+  try {
+    const content = await prisma.pageContent.findUnique({
+      where: { slug: req.params.slug, isPublished: true }
+    });
+    if (!content) return res.status(404).json({ error: "Content not found" });
+    res.json(content);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get("/api/public/faqs", async (req, res) => {
+  try {
+    const faqs = await prisma.faq.findMany({
+      where: { isActive: true },
+      orderBy: { displayOrder: "asc" }
+    });
+    res.json(faqs);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get("/api/public/settings", async (req, res) => {
+  try {
+    const settings = await prisma.globalSetting.findMany();
+    const settingsMap = settings.reduce((acc, s) => ({ ...acc, [s.key]: s.value }), {});
+    res.json(settingsMap);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/*
+====================================
+CMS ADMIN ROUTES
+====================================
+*/
+
+app.put("/api/admin/content/:slug", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
+  try {
+    const { pageTitle, metaDescription, htmlBody, structuredData, isPublished } = req.body;
+    const content = await prisma.pageContent.upsert({
+      where: { slug: req.params.slug },
+      update: { pageTitle, metaDescription, htmlBody, structuredData, isPublished },
+      create: { slug: req.params.slug, pageTitle, metaDescription, htmlBody, structuredData, isPublished }
+    });
+    res.json(content);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get("/api/admin/faqs", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
+  try {
+    const faqs = await prisma.faq.findMany({ orderBy: { displayOrder: "asc" } });
+    res.json(faqs);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post("/api/admin/faqs", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
+  try {
+    const faq = await prisma.faq.create({ data: req.body });
+    res.json(faq);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put("/api/admin/faqs/:id", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
+  try {
+    const faq = await prisma.faq.update({
+      where: { id: req.params.id },
+      data: req.body
+    });
+    res.json(faq);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.delete("/api/admin/faqs/:id", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
+  try {
+    await prisma.faq.delete({ where: { id: req.params.id } });
+    res.json({ message: "FAQ deleted" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put("/api/admin/settings", authMiddleware, requireRole(["ADMIN", "SUPER_ADMIN"]), async (req, res) => {
+  try {
+    const settings = req.body; // Expecting { key: value, ... }
+    const operations = Object.entries(settings).map(([key, value]) => 
+      prisma.globalSetting.upsert({
+        where: { key },
+        update: { value: String(value) },
+        create: { key, value: String(value) }
+      })
+    );
+    await Promise.all(operations);
+    res.json({ message: "Settings updated" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.listen(PORT, () => {
-  console.log(`SERVER RUNNING ON PORT ${PORT}`);
+  const isProd = process.env.NODE_ENV === 'production';
+  const displayUrl = isProd ? "https://api.paybee.live" : `http://localhost:${PORT}`;
+  const envName = isProd ? "Production" : "Development";
+
+  console.log("\n\x1b[32m ___________________________________________________\x1b[0m");
+  console.log("\x1b[32m|                                                   |\x1b[0m");
+  console.log("\x1b[32m| \x1b[1mPAYBEE CORE SYSTEMS\x1b[22m                               |\x1b[0m");
+  console.log("\x1b[32m|___________________________________________________|\x1b[0m");
+  console.log("\x1b[32m|                                                   |\x1b[0m");
+  console.log(`\x1b[32m|  \x1b[36m⚡ Status:\x1b[0m Online                                |`);
+  console.log(`\x1b[32m|  \x1b[35m🌍 Env:\x1b[0m    ${envName.padEnd(35)} \x1b[32m|\x1b[0m`);
+  console.log(`\x1b[32m|  \x1b[33m🔗 URL:\x1b[0m    ${displayUrl.padEnd(35)} \x1b[32m|\x1b[0m`);
+  console.log("\x1b[32m|___________________________________________________|\x1b[0m\n");
 });

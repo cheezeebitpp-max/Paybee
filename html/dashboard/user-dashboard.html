@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayBee | Dashboard</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'hive-green': '#2E7D32',
+                        'neon-green': '#7CB342',
+                        'honey-gold': '#FFC107',
+                        'deep-forest': '#0F1014', /* Sleek Grey-Black */
+                        'snow-white': '#FAFAFA',
+                        'charcoal': '#1A1A1A',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'display': ['Space Grotesk', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar for dashboard content */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #E5E7EB;
+            border-radius: 10px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #D1D5DB;
+        }
+
+        /* AI Chat Markdown Styling */
+        .prose p {
+            margin-bottom: 0.5rem;
+        }
+
+        .prose strong {
+            color: #FFC107;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-[#F3F4F6] text-charcoal font-sans antialiased h-screen flex overflow-hidden selection:bg-neon-green selection:text-deep-forest">
+
+    <!-- SIDEBAR (Desktop) -->
+    <aside
+        class="hidden lg:flex flex-col w-64 bg-deep-forest h-full border-r border-gray-800 text-gray-400 relative z-20">
+        <!-- Logo -->
+        <div class="h-20 flex items-center px-6 border-b border-gray-800">
+            <a href="index.html">
+                <img src="./PayBee-Logo-transparent.webp" alt="PayBee Logo"
+                    class="h-10 w-auto object-contain scale-110 origin-left">
+            </a>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="flex-1 overflow-y-auto py-6 px-4 space-y-1 custom-scroll">
+            <p class="px-4 text-xs font-bold text-gray-600 uppercase tracking-widest mb-2 mt-4">Menu</p>
+
+            <!-- Active Link -->
+            <a href="dashboard.html"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl bg-hive-green/20 text-neon-green font-medium transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                    </path>
+                </svg>
+                Dashboard
+            </a>
+
+            <a href="#"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-800 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                    </path>
+                </svg>
+                P2P Market
+            </a>
+
+            <a href="#"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-800 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z">
+                    </path>
+                </svg>
+                My Wallet
+            </a>
+
+            <a href="#"
+                class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-gray-800 hover:text-white transition-colors group">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+                        </path>
+                    </svg>
+                    Active Trades
+                </div>
+                <span class="bg-honey-gold text-deep-forest text-xs font-bold px-2 py-0.5 rounded-full">1</span>
+            </a>
+
+            <a href="#"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-800 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Trade History
+            </a>
+
+            <p class="px-4 text-xs font-bold text-gray-600 uppercase tracking-widest mb-2 mt-8">Account</p>
+
+            <a href="#"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-800 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                    </path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                Settings
+            </a>
+            <a href="login.html"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-red-900/30 hover:text-red-400 transition-colors mt-auto">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                    </path>
+                </svg>
+                Log Out
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="flex-1 flex flex-col h-full relative overflow-hidden z-10">
+
+        <!-- TOPBAR -->
+        <header
+            class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-6 shrink-0 z-20 shadow-sm">
+            <!-- Mobile Menu Button -->
+            <button class="lg:hidden text-gray-500 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+
+            <!-- Search (Hidden on Mobile) -->
+            <div
+                class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-96 border border-transparent focus-within:border-hive-green focus-within:bg-white transition-colors">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <input type="text" placeholder="Search trades, users, or TXIDs..."
+                    class="bg-transparent border-none outline-none text-sm ml-2 w-full text-gray-700 placeholder-gray-400">
+            </div>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-4 ml-auto">
+                <!-- Notifications -->
+                <button
+                    class="relative p-2 text-gray-400 hover:text-deep-forest transition-colors rounded-full hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
+                        </path>
+                    </svg>
+                    <span
+                        class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+                </button>
+
+                <div class="w-px h-6 bg-gray-200 hidden sm:block"></div>
+
+                <!-- User Profile -->
+                <button class="flex items-center gap-3 hover:bg-gray-50 p-1.5 rounded-full transition-colors pr-4">
+                    <div
+                        class="w-9 h-9 rounded-full bg-hive-green text-white flex items-center justify-center font-bold text-sm relative">
+                        JD
+                        <div
+                            class="absolute -bottom-1 -right-1 w-4 h-4 bg-neon-green rounded-full border-2 border-white flex items-center justify-center">
+                            <svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="text-left hidden sm:block">
+                        <p class="text-sm font-bold text-deep-forest leading-tight">John Doe</p>
+                        <p class="text-[10px] font-bold text-hive-green uppercase tracking-wide">Verified Level 2</p>
+                    </div>
+                    <svg class="w-4 h-4 text-gray-400 hidden sm:block ml-1" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- DASHBOARD SCROLLABLE CONTENT -->
+        <main class="flex-1 overflow-y-auto p-6 md:p-10 custom-scroll relative">
+            <!-- Subtle BG pattern -->
+            <div class="absolute inset-0 pointer-events-none opacity-[0.02]"
+                style="background-image: radial-gradient(#1A1A1A 1px, transparent 1px); background-size: 24px 24px;">
+            </div>
+
+            <div class="max-w-6xl mx-auto relative z-10 space-y-8">
+
+                <!-- Welcome Section -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 animate-fade-in">
+                    <div>
+                        <h1 class="font-display text-3xl font-bold text-deep-forest">Dashboard</h1>
+                        <p class="text-gray-500">Welcome back, John. Here is your overview.</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <button
+                            class="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-xl text-sm font-bold hover:bg-gray-50 transition-colors shadow-sm">Post
+                            Sell Ad</button>
+                        <button
+                            class="px-4 py-2 bg-hive-green text-white rounded-xl text-sm font-bold hover:bg-neon-green hover:text-deep-forest transition-colors shadow-sm shadow-hive-green/30">Buy
+                            USDT</button>
+                    </div>
+                </div>
+
+                <!-- Top Stats Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in" style="animation-delay: 100ms;">
+
+                    <!-- Main Wallet Card (Dark) -->
+                    <div
+                        class="md:col-span-2 bg-deep-forest rounded-[2rem] p-8 shadow-xl relative overflow-hidden text-white flex flex-col justify-between min-h-[220px]">
+                        <div
+                            class="absolute top-0 right-0 w-64 h-64 bg-neon-green/10 rounded-full filter blur-[60px] translate-x-1/4 -translate-y-1/4">
+                        </div>
+                        <div class="relative z-10 flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-400 font-medium text-sm tracking-wide uppercase mb-1">Available USDT
+                                    Balance</p>
+                                <div class="flex items-baseline gap-2">
+                                    <span
+                                        class="text-5xl font-display font-bold text-white tracking-tight">1,250.00</span>
+                                    <span class="text-neon-green font-bold text-lg">USDT</span>
+                                </div>
+                                <p class="text-sm text-gray-500 mt-2">≈ $1,250.00 USD / ₹1,04,375 INR</p>
+                            </div>
+                            <div
+                                class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center backdrop-blur-md">
+                                <svg class="w-6 h-6 text-honey-gold" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 flex gap-4 mt-8">
+                            <button
+                                class="px-6 py-2.5 bg-honey-gold text-deep-forest rounded-xl text-sm font-bold hover:bg-white transition-colors">Deposit</button>
+                            <button
+                                class="px-6 py-2.5 bg-white/10 border border-white/20 text-white rounded-xl text-sm font-bold hover:bg-white/20 transition-colors backdrop-blur-md">Withdraw</button>
+                        </div>
+                    </div>
+
+                    <!-- Escrowed / Locked Card -->
+                    <div
+                        class="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 flex flex-col justify-between min-h-[220px]">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <p class="text-gray-500 font-medium text-sm tracking-wide uppercase">In Escrow (Locked)
+                                </p>
+                                <div class="w-8 h-8 rounded-full bg-honey-gold/10 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-honey-gold" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                                        </path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <span
+                                    class="text-3xl font-display font-bold text-deep-forest tracking-tight">500.00</span>
+                                <span class="text-gray-400 font-bold text-sm">USDT</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <p class="text-xs text-gray-500 mb-1">Locked in 1 active trade</p>
+                            <a href="#"
+                                class="text-sm font-bold text-hive-green hover:text-neon-green transition-colors">View
+                                Trade Details →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Trade Banner (Only shows if there is an active trade) -->
+                <div class="bg-gradient-to-r from-hive-green to-deep-forest rounded-2xl p-1 relative overflow-hidden shadow-lg animate-fade-in"
+                    style="animation-delay: 200ms;">
+                    <div
+                        class="bg-white rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+                        <div class="flex items-center gap-5 w-full md:w-auto">
+                            <!-- Pulse indicator -->
+                            <div class="relative flex h-10 w-10 shrink-0">
+                                <span
+                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-honey-gold opacity-30"></span>
+                                <span
+                                    class="relative inline-flex rounded-full h-10 w-10 bg-honey-gold/20 items-center justify-center border border-honey-gold">
+                                    <svg class="w-5 h-5 text-honey-gold" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span
+                                        class="bg-honey-gold/20 text-honey-gold text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Action
+                                        Required</span>
+                                    <span class="text-sm text-gray-400 font-mono">Trade #TR-9821</span>
+                                </div>
+                                <h3 class="font-bold text-lg text-deep-forest">Selling 500 USDT to @AlexB</h3>
+                                <p class="text-sm text-gray-500">Buyer has uploaded payment proof. Please review and
+                                    confirm receipt.</p>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-auto shrink-0 text-right">
+                            <p class="text-xs text-gray-400 mb-2">Timer ends in <span
+                                    class="font-bold text-red-500 font-mono">14:22</span></p>
+                            <button
+                                class="w-full md:w-auto px-6 py-2.5 bg-deep-forest text-white rounded-xl text-sm font-bold hover:bg-hive-green transition-colors">Review
+                                Evidence</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Section: Quick Links & Recent History -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in" style="animation-delay: 300ms;">
+
+                    <!-- Quick Actions -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col h-full">
+                        <h3 class="font-bold text-lg text-deep-forest mb-4">Quick Actions</h3>
+                        <div class="space-y-3 flex-1">
+                            <a href="#"
+                                class="flex items-center gap-4 p-3 rounded-xl hover:bg-gray-50 border border-transparent hover:border-gray-100 transition-all group">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-hive-green/10 flex items-center justify-center text-hive-green group-hover:scale-110 transition-transform">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-sm text-gray-800">Post a Sell Ad</p>
+                                    <p class="text-xs text-gray-500">Set your rate and accept fiat</p>
+                                </div>
+                            </a>
+                            <a href="#"
+                                class="flex items-center gap-4 p-3 rounded-xl hover:bg-gray-50 border border-transparent hover:border-gray-100 transition-all group">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-neon-green/10 flex items-center justify-center text-hive-green group-hover:scale-110 transition-transform">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-sm text-gray-800">Browse Buy Offers</p>
+                                    <p class="text-xs text-gray-500">Find the best USDT rates</p>
+                                </div>
+                            </a>
+                            <a href="#"
+                                class="flex items-center gap-4 p-3 rounded-xl hover:bg-gray-50 border border-transparent hover:border-gray-100 transition-all group">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 group-hover:scale-110 transition-transform">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-sm text-gray-800">Security Settings</p>
+                                    <p class="text-xs text-gray-500">Manage 2FA and passwords</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity Table -->
+                    <div
+                        class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col h-full">
+                        <div class="px-6 py-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                            <h3 class="font-bold text-lg text-deep-forest">Recent Activity</h3>
+                            <a href="#"
+                                class="text-xs font-bold text-hive-green hover:text-neon-green transition-colors">View
+                                All History</a>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm whitespace-nowrap">
+                                <thead
+                                    class="bg-white text-gray-400 text-xs uppercase tracking-wider border-b border-gray-100">
+                                    <tr>
+                                        <th class="px-6 py-4 font-medium">Type</th>
+                                        <th class="px-6 py-4 font-medium">Amount</th>
+                                        <th class="px-6 py-4 font-medium">Status</th>
+                                        <th class="px-6 py-4 font-medium">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-50 text-gray-600">
+                                    <tr class="hover:bg-gray-50/50 transition-colors group cursor-pointer">
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center gap-3">
+                                                <div
+                                                    class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 group-hover:bg-blue-100 transition-colors">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                                    </svg>
+                                                </div>
+                                                <span class="font-medium text-gray-800">Deposit (TRC20)</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 font-mono font-medium">+1,000.00 <span
+                                                class="text-gray-400 text-xs">USDT</span></td>
+                                        <td class="px-6 py-4">
+                                            <span
+                                                class="bg-green-100 text-green-700 px-2.5 py-1 rounded border border-green-200 text-xs font-bold">Completed</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-gray-400">Today, 10:24 AM</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/50 transition-colors group cursor-pointer">
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center gap-3">
+                                                <div
+                                                    class="w-8 h-8 rounded-full bg-hive-green/10 flex items-center justify-center text-hive-green group-hover:bg-hive-green/20 transition-colors">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z">
+                                                        </path>
+                                                    </svg>
+                                                </div>
+                                                <span class="font-medium text-gray-800">Bought USDT</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 font-mono font-medium text-hive-green">+250.00 <span
+                                                class="text-gray-400 text-xs">USDT</span></td>
+                                        <td class="px-6 py-4">
+                                            <span
+                                                class="bg-green-100 text-green-700 px-2.5 py-1 rounded border border-green-200 text-xs font-bold">Completed</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-gray-400">Yesterday, 14:05 PM</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/50 transition-colors group cursor-pointer">
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center gap-3">
+                                                <div
+                                                    class="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center text-red-500 group-hover:bg-red-100 transition-colors">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2" d="M5 10l7-7m0 0l7-7m-7-7v18"></path>
+                                                    </svg>
+                                                </div>
+                                                <span class="font-medium text-gray-800">Withdraw (ERC20)</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 font-mono font-medium">-500.00 <span
+                                                class="text-gray-400 text-xs">USDT</span></td>
+                                        <td class="px-6 py-4">
+                                            <span
+                                                class="bg-green-100 text-green-700 px-2.5 py-1 rounded border border-green-200 text-xs font-bold">Completed</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-gray-400">May 4, 09:12 AM</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Dashboard Footer -->
+            <div
+                class="max-w-6xl mx-auto mt-12 pt-6 border-t border-gray-200 flex justify-between items-center text-xs text-gray-400 pb-8">
+                <p>© 2026 PayBee.live. Internal Dashboard.</p>
+                <div class="flex gap-4">
+                    <a href="terms.html" class="hover:text-hive-green">Terms</a>
+                    <a href="privacy.html" class="hover:text-hive-green">Privacy</a>
+                    <a href="contact.html" class="hover:text-hive-green">Support</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- AI Assistant Widget (Dashboard Context) -->
+    <div id="ai-widget-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <div id="ai-chat-window"
+            class="hidden w-80 sm:w-96 bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200 mb-4 transform transition-all origin-bottom-right scale-0">
+            <div class="bg-deep-forest text-white p-4 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-neon-green flex items-center justify-center text-deep-forest">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm leading-tight">PayBee Assistant</h4>
+                        <span class="text-xs text-neon-green flex items-center gap-1"><span
+                                class="w-1.5 h-1.5 bg-neon-green rounded-full"></span> Online</span>
+                    </div>
+                </div>
+                <button onclick="toggleChat()" class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <div id="ai-chat-body" class="p-4 h-80 overflow-y-auto bg-gray-50 flex flex-col gap-3 text-sm">
+                <div
+                    class="self-start max-w-[85%] bg-white p-3 rounded-2xl rounded-tl-sm border border-gray-100 shadow-sm text-gray-700">
+                    Hello John! I'm your dashboard assistant. I see you have 1 active trade waiting for your review.
+                    Need help checking the payment proof?
+                </div>
+            </div>
+
+            <form id="ai-chat-form" class="p-3 bg-white border-t border-gray-100 flex gap-2"
+                onsubmit="handleChatSubmit(event)">
+                <input type="text" id="ai-chat-input" placeholder="Ask about trades, balances..."
+                    class="w-full bg-gray-100 text-charcoal px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-hive-green/50 text-sm"
+                    required>
+                <button type="submit"
+                    class="bg-hive-green text-white p-2 rounded-full hover:bg-neon-green hover:text-deep-forest transition-colors shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+        <button id="ai-fab" onclick="toggleChat()"
+            class="w-14 h-14 bg-honey-gold text-deep-forest rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300 relative group">
+            <div class="absolute inset-0 bg-honey-gold rounded-full animate-ping opacity-20"></div>
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z">
+                </path>
+            </svg>
+        </button>
+    </div>
+
+    <style>
+        /* Fade in animation class */
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script>
+        // --- GEMINI AI ASSISTANT LOGIC ---
+        const chatWindow = document.getElementById('ai-chat-window');
+        const chatBody = document.getElementById('ai-chat-body');
+        const chatInput = document.getElementById('ai-chat-input');
+        let isChatOpen = false;
+        const apiKey = "";
+
+        window.toggleChat = function () {
+            isChatOpen = !isChatOpen;
+            if (isChatOpen) {
+                chatWindow.classList.remove('hidden');
+                setTimeout(() => {
+                    chatWindow.classList.remove('scale-0');
+                    chatWindow.classList.add('scale-100');
+                    chatInput.focus();
+                }, 10);
+            } else {
+                chatWindow.classList.remove('scale-100');
+                chatWindow.classList.add('scale-0');
+                setTimeout(() => chatWindow.classList.add('hidden'), 300);
+            }
+        }
+
+        function appendMessage(text, isUser = false, isTyping = false) {
+            const wrapper = document.createElement('div');
+            wrapper.className = `max-w-[85%] p-3 rounded-2xl shadow-sm text-sm ${isUser ? 'self-end bg-hive-green text-white rounded-tr-sm' : 'self-start bg-white border border-gray-100 text-gray-700 rounded-tl-sm prose'
+                }`;
+
+            if (isTyping) {
+                wrapper.id = "ai-typing-indicator";
+                wrapper.innerHTML = `<span class="flex gap-1 items-center h-5"><span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span><span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></span><span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></span></span>`;
+            } else {
+                let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/\n/g, '<br>');
+                wrapper.innerHTML = formattedText;
+            }
+
+            chatBody.appendChild(wrapper);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        window.handleChatSubmit = async function (e) {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            appendMessage(text, true);
+            chatInput.value = '';
+            appendMessage('', false, true);
+
+            try {
+                const response = await callGeminiWithBackoff(text);
+                const typingIndicator = document.getElementById('ai-typing-indicator');
+                if (typingIndicator) typingIndicator.remove();
+                appendMessage(response);
+            } catch (error) {
+                const typingIndicator = document.getElementById('ai-typing-indicator');
+                if (typingIndicator) typingIndicator.remove();
+                appendMessage("I'm sorry, I'm having trouble connecting right now. Please try again later.");
+                console.error("Gemini API Error:", error);
+            }
+        }
+
+        async function callGeminiWithBackoff(promptText, retries = 5) {
+            const systemInstruction = "You are the PayBee AI Assistant. You are currently on the logged-in 'User Dashboard' page. You assist the user (John Doe) with internal platform actions like reviewing payment proof, managing their wallet, posting sell ads, or initiating withdrawals. Keep answers brief, helpful, and professional.";
+            const payload = { contents: [{ parts: [{ text: promptText }] }], systemInstruction: { parts: [{ text: systemInstruction }] } };
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const delays = [1000, 2000, 4000, 8000, 16000];
+
+            for (let i = 0; i <= retries; i++) {
+                try {
+                    const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const data = await response.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process that.";
+                } catch (error) {
+                    if (i === retries) throw error;
+                    await new Promise(resolve => setTimeout(resolve, delays[i]));
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
