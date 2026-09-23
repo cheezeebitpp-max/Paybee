@@ -1,0 +1,23 @@
+node_modules
+# Keep environment variables out of version control
+.env
+.env.local
+.env.production
+
+/generated/prisma
+
+# Database backups & temporary files
+*.dump
+*_backup.sql
+production_backup.sql
+*.sql.bak
+*.bak
+!prisma/migrations/**/*.sql
+
+# System & logs
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+

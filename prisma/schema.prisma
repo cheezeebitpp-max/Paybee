@@ -1,0 +1,196 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x", "linux-musl", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  FROZEN
+  SUSPENDED
+  BANNED
+}
+
+enum KycStatus {
+  PENDING
+  SUBMITTED
+  VERIFIED
+  REJECTED
+}
+
+model User {
+  id            String     @id @default(uuid())
+  email         String     @unique
+  password      String
+  fullName      String?    @map("full_name")
+  role          Role       @default(USER)
+  status        UserStatus @default(ACTIVE)
+  walletBalance Float      @default(0) @map("wallet_balance")
+  kycStatus     KycStatus  @default(PENDING) @map("kyc_status")
+  createdById   String?    @map("created_by_id")
+  
+  // Security & 2FA
+  isTwoFactorEnabled Boolean @default(false) @map("is_two_factor_enabled")
+  twoFactorSecret    String? @map("two_factor_secret")
+  
+  // KYC & Verification Fields
+  emailVerified          Boolean   @default(false) @map("email_verified")
+  emailVerificationToken String?   @map("email_verification_token")
+  aadhaarNumber          String?   @map("aadhaar_number")
+  aadhaarDocUrl          String?   @map("aadhaar_doc_url")
+  selfieUrl              String?   @map("selfie_url")
+  kycBypassed            Boolean   @default(false) @map("kyc_bypassed")
+  phone                  String?
+  address                String?
+  profilePicture         String?   @map("profile_picture")
+
+  
+  createdBy     User?      @relation("AdminCreatedUsers", fields: [createdById], references: [id])
+  createdUsers  User[]     @relation("AdminCreatedUsers")
+  
+  deposits      Deposit[]
+  payouts       Payout[]
+  trades        Trade[]
+  bankDetails   BankDetail[]
+  notifications Notification[]
+  
+  createdAt     DateTime   @default(now()) @map("created_at")
+
+  @@map("profiles")
+}
+
+model Deposit {
+  id            String   @id @default(uuid())
+  amount        Float
+  network       String
+  hashKey       String?  @map("txid")
+  walletAddress String?  @map("wallet_address")
+  proofUrl      String?  @map("proof_url")
+  status        String   @default("pending")
+  userId        String   @map("user_id")
+  user          User     @relation(fields: [userId], references: [id])
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("deposits")
+}
+
+model Payout {
+  id            String   @id @default(uuid())
+  amount        Float
+  status        String   @default("pending")
+  utrNumber     String?  @map("utr_number")
+  userId        String   @map("user_id")
+  user          User     @relation(fields: [userId], references: [id])
+  bankDetailsId String?  @map("bank_details_id")
+  bankDetails   BankDetail? @relation(fields: [bankDetailsId], references: [id])
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("payouts")
+}
+
+model Trade {
+  id            String   @id @default(uuid())
+  amount        Float
+  type          String   @default("SELL")
+  cryptoAsset   String   @default("USDT") @map("crypto_asset")
+  paymentMethod String?  @map("payment_method")
+  status        String   @default("pending")
+  userId        String   @map("user_id")
+  user          User     @relation(fields: [userId], references: [id])
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("trades")
+}
+
+model BankDetail {
+  id            String   @id @default(uuid())
+  userId        String   @map("user_id")
+  user          User     @relation(fields: [userId], references: [id])
+  accountName   String   @map("account_name")
+  accountNumber String   @map("account_number")
+  ifscCode      String   @map("ifsc_code")
+  bankName      String   @map("bank_name")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  payouts       Payout[]
+  @@map("bank_details")
+}
+model PageContent {
+  id              String   @id @default(uuid())
+  slug            String   @unique
+  pageTitle       String   @map("page_title")
+  metaDescription String?  @map("meta_description")
+  htmlBody        String?  @map("html_body")
+  structuredData  Json?    @map("structured_data")
+  isPublished     Boolean  @default(true) @map("is_published")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("page_contents")
+}
+
+model Faq {
+  id           String   @id @default(uuid())
+  question     String
+  answer       String
+  displayOrder Int      @default(0) @map("display_order")
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("faqs")
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id])
+  title     String
+  message   String
+  type      String   // INFO, SUCCESS, WARNING, ERROR
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at")
+  
+  @@map("notifications")
+}
+
+model GlobalSetting {
+  key   String @id
+  value String
+
+  @@map("global_settings")
+}
+
+model AdminWallet {
+  id          String   @id @default(uuid())
+  network     String   // e.g., TRC20, ERC20
+  address     String
+  qrCodeUrl   String?  @map("qr_code_url")
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("admin_wallets")
+}
+
+model Waitlist {
+  id        String   @id @default(uuid())
+  firstName String   @map("first_name")
+  lastName  String   @map("last_name")
+  email     String   @unique
+  phone     String?
+  status    String   @default("PENDING") // PENDING, INVITED, REJECTED
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("waitlist")
+}
