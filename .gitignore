@@ -20,4 +20,6 @@ production_backup.sql
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+reset-admin.js
+temp*
 

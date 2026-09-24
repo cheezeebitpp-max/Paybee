@@ -12,7 +12,9 @@ const {
   sendWaitlistConfirmation,
   sendAdminWaitlistAlert,
   sendAdminDepositAlert,
-  sendAdminPayoutAlert
+  sendAdminPayoutAlert,
+  sendContactInquiryAlert,
+  sendContactConfirmationUser
 } = require("./services/emailService");
 
 dotenv.config();
@@ -123,6 +125,50 @@ async function verifyDepositHash(hashKey, network, expectedAmount) {
 AUTH ROUTES
 ====================================
 */
+
+/*
+====================================
+CONTACT FORM API (BREVO SMTP)
+====================================
+*/
+app.post("/api/contact", async (req, res) => {
+  try {
+    const { name, email, subject, message } = req.body;
+    
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: "Full name, email address, and message are required." });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(String(email).trim())) {
+      return res.status(400).json({ error: "Please enter a valid email address." });
+    }
+
+    const department = subject || "support";
+
+    // 1. Send alert to Admin via Brevo
+    await sendContactInquiryAlert({
+      name: String(name).trim(),
+      email: String(email).trim().toLowerCase(),
+      department,
+      message: String(message).trim(),
+    });
+
+    // 2. Send acknowledgment to user asynchronously
+    sendContactConfirmationUser(String(email).trim().toLowerCase(), String(name).trim())
+      .catch(err => console.error("[ContactEmail] Failed to send user confirmation:", err));
+
+    return res.status(200).json({
+      success: true,
+      message: "Thank you for contacting us. Your message has been sent successfully."
+    });
+  } catch (error) {
+    console.error("[ContactAPI] Error handling contact form:", error);
+    return res.status(500).json({
+      error: "Unable to send your message right now. Please try again or email support@paybee.live directly."
+    });
+  }
+});
 
 app.post("/api/waitlist", async (req, res) => {
   try {

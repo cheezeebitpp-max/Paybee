@@ -115,7 +115,7 @@ function getBaseHtml(title, bodyContent) {
 /**
  * Generic helper to send emails defensively
  */
-async function sendMailHelper(to, subject, htmlContent) {
+async function sendMailHelper(to, subject, htmlContent, replyTo = null) {
   if (!process.env.BREVO_SMTP_USER || !process.env.BREVO_SMTP_KEY) {
     console.warn(`[EmailService] SMTP credentials not set. Simulated sending "${subject}" to ${to}`);
     return;
@@ -126,6 +126,7 @@ async function sendMailHelper(to, subject, htmlContent) {
     to,
     subject,
     html: htmlContent,
+    ...(replyTo ? { replyTo } : {}),
   };
 
   try {
@@ -265,9 +266,89 @@ async function sendAdminPayoutAlert(userEmail, amount, network, bankDetails) {
   return sendMailHelper(adminEmail, `Admin Alert: Payout Request - ${amount}`, htmlContent);
 }
 
+
+/**
+ * Sends a notification to Admin/Support when a user submits the Contact Us form.
+ */
+async function sendContactInquiryAlert({ name, email, department, message }) {
+  const adminEmail = process.env.ADMIN_EMAIL || "admin@paybee.live";
+
+  const departmentLabels = {
+    support: "General Support",
+    accounts: "New Account Application",
+    business: "Business & OTC",
+    legal: "Compliance & Legal",
+    press: "Press & Media",
+  };
+  const deptDisplay = departmentLabels[department] || department || "General Support";
+
+  const title = `New Contact Inquiry - ${deptDisplay}`;
+  const sanitizedMessage = String(message)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\n/g, "<br/>");
+
+  const bodyContent = `
+    <h1>New Contact Us Inquiry</h1>
+    <p>A new inquiry was submitted from the PayBee landing page:</p>
+    <table class="details-table">
+      <tr>
+        <td class="label">Sender Name</td>
+        <td class="value"><strong>${name}</strong></td>
+      </tr>
+      <tr>
+        <td class="label">Email Address</td>
+        <td class="value"><a href="mailto:${email}">${email}</a></td>
+      </tr>
+      <tr>
+        <td class="label">Department</td>
+        <td class="value"><strong>${deptDisplay}</strong></td>
+      </tr>
+      <tr>
+        <td class="label">Submitted At</td>
+        <td class="value">${new Date().toUTCString()}</td>
+      </tr>
+    </table>
+    <div style="margin-top: 24px; padding: 18px; background-color: #f7f9fa; border-left: 4px solid #2E7D32; border-radius: 6px;">
+      <p style="margin: 0 0 8px 0; font-weight: 700; color: #2E7D32; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">Message Content:</p>
+      <div style="font-size: 15px; color: #1a1a1a; line-height: 1.6;">${sanitizedMessage}</div>
+    </div>
+    <p style="margin-top: 24px; font-size: 13px; color: #777;">
+      <em>Note: You can reply directly to this email to respond to ${name} (${email}).</em>
+    </p>
+  `;
+  const htmlContent = getBaseHtml(title, bodyContent);
+  return sendMailHelper(
+    adminEmail,
+    `[PayBee Contact] [${deptDisplay}] Message from ${name}`,
+    htmlContent,
+    email
+  );
+}
+
+/**
+ * Sends an automated confirmation receipt to the user who contacted support.
+ */
+async function sendContactConfirmationUser(userEmail, name) {
+  const title = "We Received Your Message - PayBee";
+  const bodyContent = `
+    <h1>Thank you for contacting PayBee</h1>
+    <p>Hello ${name},</p>
+    <p>We have successfully received your inquiry. Our team has been notified and will review your message shortly.</p>
+    <p>Most inquiries are addressed within <strong>2 hours</strong> during operational windows. If you need immediate assistance regarding an active trade, our 24/7 live chat is also available directly within the platform.</p>
+    <br/>
+    <p>Best regards,<br/><strong>The PayBee Team</strong><br/><a href="https://paybee.live">https://paybee.live</a></p>
+  `;
+  const htmlContent = getBaseHtml(title, bodyContent);
+  return sendMailHelper(userEmail, "PayBee: We received your message", htmlContent);
+}
+
 module.exports = {
   sendWaitlistConfirmation,
   sendAdminWaitlistAlert,
   sendAdminDepositAlert,
   sendAdminPayoutAlert,
+  sendContactInquiryAlert,
+  sendContactConfirmationUser,
 };
